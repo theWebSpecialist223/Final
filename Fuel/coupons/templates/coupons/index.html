@@ -1,0 +1,17 @@
+{% extends "coupons/base.html" %}
+{% load static %}
+{% block content %}
+  <body>
+    <br>
+    <br>
+    <div class ="text-center">
+        <img src = "{% static 'images/download.jpg'%}" />
+        <h3> Ministry Of Transport and Infrastructural Development</h3>
+        <br>
+        <h5> Fuel Management System </h5>
+        <hr>
+        <br>
+        <a class = "btn btn-primary" type = "button" href = "{% url 'register' %}">Create Your Account &nbsp; <i class="fa fa-user-plus" aria-hidden="true"></i></a>
+    </div>
+  </body>
+{% endblock  %}

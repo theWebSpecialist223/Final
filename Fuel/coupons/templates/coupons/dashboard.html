@@ -1,0 +1,145 @@
+{% extends "coupons/base.html" %}
+
+{% block content %}
+<h5> Welcome to dashboard {{ user }}!</h5>
+<hr>
+<a class = "btn btn-outline-primary btn-sm" href = "{% url 'add_coupons' %}">Add new Coupons &nbsp; </a>
+    &nbsp;<br />
+     <br />
+    &nbsp;
+<div class="dropdown">
+      <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Issue Coupons
+      </button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="{% url 'issue_coupons'%}">Monthly Allocation</a></li>
+        <li><a class="dropdown-item" href="{% url 'service_issue' %}">Condition of Service</a></li>
+
+      </ul>
+</div>
+<hr>
+<div class="row">
+    <div class="col-sm-4 mb-3 mb-sm-0">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Total Petrol Available</h5>
+          <br>
+          <p class="card-text"><strong>Condition of Service: </strong> {{ total_PE_cos }} litres</p>
+          <p class="card-text"><strong>Monthly Allocation: </strong> {{ total_PE_mo }} litres</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Total Diesel Available</h5>
+          <br>
+          <p class="card-text"><strong>Condition of Service: </strong> {{ total_DI_cos }} litres</p>
+          <p class="card-text"><strong>Monthly Allocation: </strong> {{ total_PE_cos }} litres</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <h3>Available Coupons</h3>
+  <hr>
+
+<table class ="table table-light table-hover table-bordered">
+    <thead class = "table-dark">
+        <tr>
+            <th scope = "col">ID</th>
+            <th scope = "col">Fuel Type</th>
+            <th scope = "col">Serial Number</th>
+            <th scope = "col">Quantity</th>
+            <th scope = "col">Purpose</th>
+            <th scope = "col">Supplier</th>
+            <th scope = "col">Amount</th>
+            <th scope = "col"> Date Created </th>      
+            <th scope = "col"> View </th>      
+        </tr>
+    </thead>
+    <tbody>
+        {% if records %}
+            {% for record in records %}
+                <tr>
+                    <td>{{record.id}}</td>
+                    <td>{{record.fuel_type}}</td>
+                    <td>{{record.serial_number_group}}</td>
+                    <td>{{record.quantity}}</td>
+                    <td>{{record.purpose}}</td>
+                    <td>{{record.supplier}}</td>
+                    <td>{{record.amount_in_litres}}</td>
+                    <td>{{record.creation_date| timesince}}</td>
+                    <td> <a  class = "btn btn-success btn-sm" href = "#"> <i class="fa fa-eye" aria-hidden="true"></i> </td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+    <hr>
+    <h3>Monthly Issued</h3>
+    <hr>
+    <table class ="table table-light table-hover table-bordered">
+        <thead class = "table-dark">
+            <tr>
+                <th scope = "col">ID</th>
+                <th scope = "col">Issued To</th>
+                <th scope = "col">Serial Number</th>
+                <th scope = "col">Quantity</th>
+                <th scope = "col">Amount owing</th>
+                <th scope = "col">  Amount</th>
+                <th scope = "col"> Date Issued </th>          
+            </tr>
+        </thead>
+        <tbody>
+            {% if monthly_records %}
+                {% for monthly_record in monthly_records %}
+                    <tr>
+                        <td>{{monthly_record.id}}</td>
+                        <td>{{monthly_record.issued_to.last_name}}</td>
+                        <td>{{monthly_record.coupon_group.serial_number_group}}</td>
+                        <td>{{monthly_record.quantity}}</td>
+                        <td>{{monthly_record.amount_owing}}</td>
+                        <td>{{monthly_record.amount_issued}}</td>
+                        <td>{{monthly_record.issued_date| timesince}}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+        <hr>
+        <h3>Condition of Service Issued</h3>
+        <hr>
+        <table class ="table table-light table-hover table-bordered">
+            <thead class = "table-dark">
+                <tr>
+                    <th scope = "col">ID</th>
+                    <th scope = "col">Serial Number</th>
+                    <th scope = "col">Issued To</th>
+                    <th scope = "col">Designation</th>
+                    <th scope = "col">Department</th>
+                    <th scope = "col">Quantity</th>
+                    <th scope = "col">Amount</th>
+                    <th scope = "col">Reason</th>
+                    <th scope = "col"> Date Issued </th>          
+                </tr>
+            </thead>
+            {% if service_records %}
+                {% for service_record in service_records %}
+                    <tr>
+                        <td>{{service_record.id}}</td>
+                        <td>{{service_record.coupon_group.serial_number_group}}</td>
+                        <td>{{service_record.issued_to}}</td> 
+                        <td>{{service_record.designation}}</td>
+                        <td>{{service_record.department}}</td>
+                        <td>{{service_record.number_of_coupons}}</td>
+                        <td>{{service_record.amount_issued}}</td>
+                        <td>{{service_record.reason}}</td>
+                        <td>{{service_record.issued_date| timesince}}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>        
+{% endblock %}

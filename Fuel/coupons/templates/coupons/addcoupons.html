@@ -1,0 +1,31 @@
+{% extends "coupons/base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <body>
+        <div class = "container bg-light shadow-md p-5 form-layout">
+            <h3> Add Coupons </h3>
+            
+            <h6> Start Adding in the Required details </h6>
+            <hr>
+            <br>
+            <form method = "POST" autocomplete = "off">
+                {% csrf_token %}
+                {{ form|crispy}}
+                <br>
+                <button type = "submit" class = "btn btn-primary"> Create Record &nbsp; <i class="fa fa-check" aria-hidden="true"></i> </button>
+                <a href = "{% url 'dashboard'%}" class = "btn btn-secondary"> Back &nbsp; <i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+            </form>
+            <br>
+            
+        </div>
+
+        <br>
+
+
+    </body>
+
+
+{% endblock %}
